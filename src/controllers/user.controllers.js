@@ -2,6 +2,9 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
+import { Timetable } from "../models/timetable.model.js";
+import { DepartmentDetail } from "../models/departmentDetail.model.js";
+
 import jwt from "jsonwebtoken";
 
 const generateAccessAndRefereshTokens = async (userId) => {
@@ -184,15 +187,56 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
         )
       );
   } catch (err) {
-    throw new ApiError(401, error?.message || "Invalid refresh token");
+    throw new ApiError(401, err?.message || "Invalid refresh token");
   }
 });
 
-const isLogedInUser = (req,res)=>{
+const isLogedInUser =async (req,res)=>{
   if(req.user._id){
+    let User = req.user
+    let Department = null
+    let Timetable= null
+    const  depatmentInfo= async()=>{
+      try {
+        const department = await DepartmentDetail.findOne({ department: req.user._id});
+        console.log(department);
+        if(!department){
+          return false
+        }
+        else{
+          return  true
+        }
+        //console.log(Department);
+      } catch (error) {
+        console.log(error);
+        return false
+      }
+    }
+    Department = await depatmentInfo()
+    console.log("out",Department);
+
+    const timetableInfo = async()=>{
+      try {
+        const timetable = await Timetable.findOne({  department: req.user._id});
+        console.log(timetable);
+        if(!timetable){
+          return false
+        }
+        else{
+          return  true
+        }
+        //console.log(timetable);
+      } catch (error) {
+        console.log(error);
+        return false
+      }
+    }
+    Timetable = await timetableInfo()
+    console.log("out",Timetable);
+
     return res
             .status(200) 
-            .json(new ApiResponse(200, {}, "User is logged in"));        
+            .json(new ApiResponse(200, {User,Department,Timetable}, "User is logged in"));        
   }
   return res
           .status(400)
