@@ -11,14 +11,14 @@ const updateTimetable=asyncHandler(
         const departmentDetail= await DepartmentDetail.findOne({department:user})
         // console.log(departmentDetail);
         const {workingday,classes,teacherID} = departmentDetail
-        // console.log(workingday);
-        // console.log(classes)
-        // console.log(teacherID);
-         const {teachID,timetable}  = await timetableGenerator(workingday,classes,teacherID)
+        console.log(workingday);
+        console.log(classes)
+        console.log(teacherID);
+        // const {teachID}  = await timetableGenerator(workingday,classes,teacherID)
         // console.log(teachID)
         // console.log(timetable)
         return res.status(200)
-                .json(new ApiResponse(200,{teachID},"Timetable Generated"))
+                .json(new ApiResponse(200,{},"Timetable Generated"))
     }
 )
 const getTimetable=asyncHandler(
