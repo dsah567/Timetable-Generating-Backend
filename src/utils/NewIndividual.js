@@ -1,4 +1,4 @@
-export class Individual{
+export class NewIndividual{
     constructor(workingdays,classes,teachID,subjectIdKey,classesInfo){
         this.classes=classes
         this.workingdays=workingdays
@@ -47,67 +47,50 @@ export class Individual{
         //         }
         //     }
         // }
-        
+        let runNum=0
+        let runNumWithoutBreak=0
         for(let i=0;i<this.classes.length-1;i++){
             for(let j=0;j<this.classes[i].timetable.length;j++){
+               
                 //console.log("ftt-1");
                 for (let k = 0; k < this.classes[i].timetable[j].length; k++){
-                    for (let x = 0; x < this.classes.length - (1+i); x++){
+                    
+                    for (let x = 0; x < this.classes.length -( i+1); x++){
+                        runNum++
                         //console.log("ftt1");
                         if((this.classes[i].timetable[j][k]) =="break"||(this.classes[i].timetable[j][k]) =="NA"){
+                            console.log(this.classes[i].timetable[j][k]);
+                            console.log("continue");
                             continue
                         }
+                        console.log("continue dont work");
+                        
+                        runNumWithoutBreak++
                         // console.log(this.teachID[this.classes[i].timetable[j][k]] ,
                         //     this.teachID[this.classes[i + 1 ].timetable[j][k]],this.teachID[this.classes[i].timetable[j][k]] ==
                         //     this.teachID[this.classes[i + 1 ].timetable[j][k]]);
                         if (
                             this.teachID[this.classes[i].timetable[j][k]] ==
-                             this.teachID[this.classes[i + 1+x ].timetable[j][k]]
+                             this.teachID[this.classes[i + 1 + x ].timetable[j][k]]
                           ) {
+                            console.log(this.teachID[this.classes[i].timetable[j][k]],
+                                this.teachID[this.classes[i + 1 + x ].timetable[j][k]],
+                                i,j,k,x);
                             //console.log("true run");
                             fittness++;
                             //console.log("ftt2",fittness);
                           }
+                          console.log("needs  2      run or     1 run");
                     }
+                    console.log("needs 5 and 4 run");
                 }
+                console.log("need 6 runs");
             }
+            //console.log(runNum,runNumWithoutBreak);
+            console.log("neds 2 run");
         }
        // console.log(fittness);
         return fittness
     }
 
-    Mate(p2){
-        let childClasses = JSON.parse(JSON.stringify(this.classes));
-        let workingdays =this.workingdays
-        let teachID =this.teachID
-        let subjectIdKey =this.subjectIdKey
-        let classesInfo =this.classesInfo
-
-        const {fullWorkingDayNo,halfWorkingDayNo,periodInFullWorkingDay,periodBeforeBreak}=workingdays
-        let wkdays= parseInt(periodInFullWorkingDay)+(parseInt(periodBeforeBreak)? 1:0)
-        for (let i = 0; i < this.classes.length; i++) {
-            //console.log(this.classes[1].timetable);
-            const max= this.subjectIdKey[i].length
-            for (let k = 0; k < this.classes[i].timetable.length; k++) {
-                childClasses[i].timetable[k]=[]
-                //console.log(childClasses[i].timetable);
-            for (let j = 0; j < this.classes[i].timetable[k].length; j++) {
-            if(parseInt(periodBeforeBreak) && j==(periodBeforeBreak)){
-                childClasses[i].timetable[k].push("break")
-                continue
-            }
-              let p = Math.random();
-              if (p < 0.30)
-                childClasses[i].timetable[k].push(this.classes[i].timetable[k][j]) 
-             else
-               childClasses[i].timetable[k].push(p2.classes[i].timetable[k][j]) 
-            //   else if (p < 0.90)
-            //     childClasses[i].timetable[k].push(p2.classes[i].timetable[k][j]) 
-            //   else
-            //     childClasses[i].timetable[k].push(this.subjectIdKey[i][this.getRandomInt(0, max-1)]);
-            }
-          }
-            }
-            return new Individual(workingdays,childClasses,teachID,subjectIdKey,classesInfo);
-      }
 }
