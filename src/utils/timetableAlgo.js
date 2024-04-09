@@ -41,6 +41,7 @@ import { NewIndividual } from "./NewIndividual.js";
         let population = []; 
         let generation=0
         let found = false;
+        let resClasses
         const {fullWorkingDayNo,halfWorkingDayNo,periodInFullWorkingDay,periodBeforeBreak}=workingdays
     
         const totalPeriods=parseInt(fullWorkingDayNo) *parseInt(periodInFullWorkingDay) + parseInt(halfWorkingDayNo)*parseInt(periodBeforeBreak)
@@ -153,15 +154,17 @@ import { NewIndividual } from "./NewIndividual.js";
         }
         console.log("Generation: " + generation + "\t" +
         "Fitness: " + population[0].Fitness);
+        resClasses = population[0].classes
         for(let i=0;i<population[0].classes.length;i++){
             console.log(population[0].classes[i].timetable);
         }
         console.log(population[0].teachID);
         console.log(population[0].subjectIdKey);
-        let cl = population[0].classes
-        console.log(cl);
-        const popu= new NewIndividual(workingdays,cl,teachID,subjectIdKey,classesInfo)
-        console.log(popu.Fitness)
+        console.log(resClasses);
+        // let cl = population[0].classes
+        // console.log(cl);
+        // const popu= new NewIndividual(workingdays,cl,teachID,subjectIdKey,classesInfo)
+        // console.log(popu.Fitness)
 
         // teachID = {
         //     cs11: 't1',
@@ -182,8 +185,8 @@ import { NewIndividual } from "./NewIndividual.js";
         //     [ 'cs21', 'cs22', 'cs23', 'cs24', 'NA' ],
         //     [ 'cs31', 'cs32', 'cs33', 'cs34', 'NA' ]
         //   ]
-    //return {classes,teachID,subjectIdKey}
+    return {resClasses,teachID,subjectIdKey}
 }
 
-timetableGenerator(workingdays,classes,teacherID)
-//export default timetableGenerator
+//timetableGenerator(workingdays,classes,teacherID)
+export default timetableGenerator

@@ -195,7 +195,8 @@ const isLogedInUser =async (req,res)=>{
   if(req.user._id){
     let User = req.user
     let Department = null
-    let Timetable= null
+    let TimetableStatus= null
+    let timetableData=null
     const  depatmentInfo= async()=>{
       try {
         const department = await DepartmentDetail.findOne({ department: req.user._id});
@@ -213,13 +214,13 @@ const isLogedInUser =async (req,res)=>{
       }
     }
     Department = await depatmentInfo()
-    //console.log("out",Department);
+    console.log("out",Department);
 
     const timetableInfo = async()=>{
       try {
-        const timetable = await Timetable.findOne({  department: req.user._id});
-        //console.log(timetable);
-        if(!timetable){
+        timetableData = await Timetable.findOne({ department: req.user._id});
+        console.log(timetableData);
+        if(!timetableData){
           return false
         }
         else{
@@ -231,11 +232,12 @@ const isLogedInUser =async (req,res)=>{
         return false
       }
     }
-    Timetable = await timetableInfo()
+    TimetableStatus = await timetableInfo()
+    //console.log(TimetableStatus);
     //console.log("out",Timetable);
     return res
             .status(200) 
-            .json(new ApiResponse(200, {User,Department,Timetable}, "User is logged in"));        
+            .json(new ApiResponse(200, {User,Department,TimetableStatus,timetableData}, "User is logged in"));        
   }
   return res
           .status(400)

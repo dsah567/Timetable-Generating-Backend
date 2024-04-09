@@ -14,11 +14,26 @@ const updateTimetable=asyncHandler(
         console.log(workingday);
         console.log(classes)
         console.log(teacherID);
-        // const {teachID}  = await timetableGenerator(workingday,classes,teacherID)
-        // console.log(teachID)
-        // console.log(timetable)
-        return res.status(200)
-                .json(new ApiResponse(200,{},"Timetable Generated"))
+        const {resClasses,teachID,subjectIdKey}  = await timetableGenerator(workingday,classes,teacherID)
+        console.log("teach",teachID)
+        console.log(resClasses)
+
+        try {
+            const doc = await Timetable.findOneAndUpdate
+                (   {department:user._id},
+                    {
+                        department:user._id,
+                        classes:resClasses,
+                        teachID,
+                        subjectIdKey
+                    },
+                    { upsert: true, new: true })
+            //console.log(doc);
+            return res.status(200)
+                        .json(new ApiResponse(200,doc, " Timetable Generated"))
+        } catch (error) {
+            throw new ApiError(500, "Something went wrong while updating detail");
+        } 
     }
 )
 const getTimetable=asyncHandler(
