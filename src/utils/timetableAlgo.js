@@ -1,6 +1,5 @@
 import {chromosome} from "./chromosome.js";
 import { Individual } from "./Individual.js";
-import { NewIndividual } from "./NewIndividual.js";
 
 // let workingdays={
 //                     fullWorkingDayNo: '5',
@@ -37,7 +36,7 @@ import { NewIndividual } from "./NewIndividual.js";
 
  const timetableGenerator=async (workingdays,classes,teacherID)=>{
 
-    let populationSize=300
+    let populationSize=500
         let population = []; 
         let generation=0
         let found = false;
@@ -120,7 +119,7 @@ import { NewIndividual } from "./NewIndividual.js";
         while(!found){
             population.sort((a, b) => Compare(a, b));
            // if (population[0].Fitness==0 ) {
-           if(population[0].Fitness==0 || generation==200){
+           if(population[0].Fitness==0 || generation==2000){
     			found = true;
     			break;
     		}

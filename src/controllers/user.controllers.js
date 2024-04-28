@@ -214,12 +214,10 @@ const isLogedInUser =async (req,res)=>{
       }
     }
     Department = await depatmentInfo()
-    console.log("out",Department);
 
     const timetableInfo = async()=>{
       try {
         timetableData = await Timetable.findOne({ department: req.user._id});
-        console.log(timetableData);
         if(!timetableData){
           return false
         }

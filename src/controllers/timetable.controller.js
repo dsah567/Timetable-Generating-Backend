@@ -11,12 +11,12 @@ const updateTimetable=asyncHandler(
         const departmentDetail= await DepartmentDetail.findOne({department:user})
         // console.log(departmentDetail);
         const {workingday,classes,teacherID} = departmentDetail
-        console.log(workingday);
-        console.log(classes)
-        console.log(teacherID);
+        // console.log(workingday);
+        // console.log(classes)
+        // console.log(teacherID);
         const {resClasses,teachID,subjectIdKey}  = await timetableGenerator(workingday,classes,teacherID)
-        console.log("teach",teachID)
-        console.log(resClasses)
+        // console.log("teach",teachID)
+        // console.log(resClasses)
 
         try {
             const doc = await Timetable.findOneAndUpdate
