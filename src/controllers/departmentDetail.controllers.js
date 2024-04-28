@@ -26,7 +26,6 @@ const addTimetable=(classes,workingDay)=>{
 const addSpecifiSub=(specificSub,classes)=>{
     for (let i =0; i<classes.length; i++){
         let subject=Object.keys(classes[i].subjectID)
-        //console.log(subject);
         specificSub.forEach(ele=>{
             let a=Object.keys(ele)[0]
             if (subject.includes(a))
@@ -36,7 +35,6 @@ const addSpecifiSub=(specificSub,classes)=>{
                 b.forEach(ele=>{
                    let [i,j]= ele.split('-')
                    specificSubject={...specificSubject,[(i-1)+"-"+(j-1)]:a}
-                   //console.log(i-1,j-1,a);
                 })
                 classes[i]={...classes[i],"specificSub":{...specificSubject,...(classes[i].specificSub?classes[i].specificSub:null)}}
                 console.log(classes[i]);
@@ -51,13 +49,6 @@ const updateDetails=asyncHandler( async (req,res)=>{
    teacherID = teach(teacherID)
    classes = addTimetable(classes,workingday)
    addSpecifiSub(specificSub,classes)
-//    console.log("useru",user);
-//    console.log("workingday",workingday);
-//    console.log("classes",classes);
-//    console.log("teacherID",teacherID);
-//    console.log("spicific Sub",specificSub);
-    // console.log(typeof user,typeof workingday,typeof classes,typeof teacherID);
-
     if(!classes){
         throw new ApiError(404,"classes are required")
     }
@@ -72,7 +63,6 @@ const updateDetails=asyncHandler( async (req,res)=>{
                     teacherID
                 },
                 { upsert: true, new: true })
-        //console.log(doc);
         return res.status(200)
                     .json(new ApiResponse(200,doc, " Successfully updated details"))
     } catch (error) {

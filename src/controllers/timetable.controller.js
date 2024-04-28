@@ -9,14 +9,8 @@ const updateTimetable=asyncHandler(
     async(req,res)=>{
         const user =req.user
         const departmentDetail= await DepartmentDetail.findOne({department:user})
-        // console.log(departmentDetail);
         const {workingday,classes,teacherID} = departmentDetail
-        // console.log(workingday);
-        // console.log(classes)
-        // console.log(teacherID);
         const {resClasses,teachID,subjectIdKey}  = await timetableGenerator(workingday,classes,teacherID)
-        // console.log("teach",teachID)
-        // console.log(resClasses)
 
         try {
             const doc = await Timetable.findOneAndUpdate
@@ -28,7 +22,6 @@ const updateTimetable=asyncHandler(
                         subjectIdKey
                     },
                     { upsert: true, new: true })
-            //console.log(doc);
             return res.status(200)
                         .json(new ApiResponse(200,doc, " Timetable Generated"))
         } catch (error) {

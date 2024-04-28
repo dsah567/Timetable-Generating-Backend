@@ -26,13 +26,6 @@ const generateAccessAndRefereshTokens = async (userId) => {
 };
 
 const registerUser = asyncHandler(async (req, res) => {
-  //get details of user
-  //check user details & validation not empty
-  //check user exist or not from email and username
-  //create user object - create entry in db
-  //remove password and refresh token from result
-  //check for creation
-  //return response
 
   const { username, email, name, password } = req.body;
   console.log(username, email, name, password);
@@ -84,7 +77,6 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   const isPasswordValid = await user.isPasswordCorrect(password);
-  // console.log(isPasswordValid);
 
   if (!isPasswordValid) {
     throw new ApiError(401, "Invalid user credentials");
@@ -200,16 +192,13 @@ const isLogedInUser =async (req,res)=>{
     const  depatmentInfo= async()=>{
       try {
         const department = await DepartmentDetail.findOne({ department: req.user._id});
-       // console.log(department);
         if(!department){
           return false
         }
         else{
           return  true
         }
-        //console.log(Department);
       } catch (error) {
-        //console.log(error);
         return false
       }
     }
@@ -224,15 +213,11 @@ const isLogedInUser =async (req,res)=>{
         else{
           return  true
         }
-        //console.log(timetable);
       } catch (error) {
-        //console.log(error);
         return false
       }
     }
     TimetableStatus = await timetableInfo()
-    //console.log(TimetableStatus);
-    //console.log("out",Timetable);
     return res
             .status(200) 
             .json(new ApiResponse(200, {User,Department,TimetableStatus,timetableData}, "User is logged in"));        
