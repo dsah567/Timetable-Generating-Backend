@@ -19,6 +19,9 @@ import departmentDetailRouter from "./routes/departmentDetail.routes.js";
 import timetableRouter from "./routes/timetable.routes.js";
 
 //routes declearation
+app.get("/",(req, res) => {
+    res.send('hello world')
+  })
 app.use("/api/v1/users",userRouter)
 app.use("/api/v1/department",departmentDetailRouter)
 app.use("/api/v1/timetable",timetableRouter)
