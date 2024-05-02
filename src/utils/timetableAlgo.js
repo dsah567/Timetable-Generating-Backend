@@ -3,7 +3,7 @@ import { Individual } from "./Individual.js";
 
  const timetableGenerator=async (workingdays,classes,teacherID)=>{
 
-    let populationSize=300
+    let populationSize=150
         let population = []; 
         let generation=0
         let found = false;
@@ -62,7 +62,7 @@ import { Individual } from "./Individual.js";
     
         while(!found){
             population.sort((a, b) => Compare(a, b));
-           if(population[0].Fitness==0 || generation==2000){
+           if(population[0].Fitness==0 || generation==350){
     			found = true;
     			break;
     		}
