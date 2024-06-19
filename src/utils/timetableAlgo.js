@@ -62,7 +62,7 @@ import { Individual } from "./Individual.js";
     
         while(!found){
             population.sort((a, b) => Compare(a, b));
-           if(population[0].Fitness==0 || generation==350){
+           if(population[0].Fitness==0 || generation==2000){
     			found = true;
     			break;
     		}
